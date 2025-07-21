@@ -20,6 +20,8 @@
         return engineInitializer.initializeEngine();
       }).then(function(appRunner) {
         return appRunner.runApp();
+      }).catch(function(error) {
+        console.error('Flutter yükleme hatası:', error);
       });
     });
   </script>
