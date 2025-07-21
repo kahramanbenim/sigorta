@@ -9,11 +9,14 @@
   <base href="/">
 </head>
 <body>
+  <!-- flutter.js betiğini yükle -->
   <script src="flutter.js" defer></script>
   <script>
+    // flutter.js yüklendikten sonra başlatma işlemini yap
     window.addEventListener('load', function(ev) {
-      // Flutter yapılandırmasını tanımla
+      // _flutter nesnesini tanımla
       window._flutter = window._flutter || {};
+      // buildConfig nesnesini tanımla
       window._flutter.buildConfig = {
         environment: 'production',
         renderer: 'html', // HTML renderer'ı zorla
@@ -21,13 +24,18 @@
           mode: 'release'
         }
       };
-      _flutter.loader.load().then(function(engineInitializer) {
-        return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
-        return appRunner.runApp();
-      }).catch(function(error) {
-        console.error('Flutter yükleme hatası:', error);
-      });
+      // _flutter.loader tanımlı mı kontrol et
+      if (window._flutter && window._flutter.loader) {
+        window._flutter.loader.load().then(function(engineInitializer) {
+          return engineInitializer.initializeEngine();
+        }).then(function(appRunner) {
+          return appRunner.runApp();
+        }).catch(function(error) {
+          console.error('Flutter yükleme hatası:', error);
+        });
+      } else {
+        console.error('Hata: _flutter.loader tanımlı değil. flutter.js betiğinin yüklendiğinden emin olun.');
+      }
     });
   </script>
 </body>
